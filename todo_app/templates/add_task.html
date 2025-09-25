@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm">
-                <div class="card-header text-white" style="background-color: rgb(180, 91, 153);">
+                <div class="card-header text-white bg-info">
                     <h4 class="mb-0"> Add New Task</h4>
                 </div>
                 <div class="card-body">
@@ -29,7 +29,13 @@
                             <label for="due_date" class="form-label">Due Date</label>
                             <input type="date" id="due_date" name="due_date" class="form-control">
                         </div>
-                        <button type="submit" class="btn w-100" style="background-color: rgb(180, 117, 161); border: none; border-radius: 2px;color: white;">Add Task</button>
+                        <div class="d-flex justify-content-end gap-3">
+                            <a href="{% url 'home' %}" class="btn btn-secondary ms-2">Cancel</a>
+                            <button type="submit" class="btn text-white bg-success rounded-1">
+                                Add Task
+                            </button>
+                        </div>
+                        <!-- <button type="submit" class="btn text-white bg-info rounded-1 d-flex justify-content-end" >Add Task</button> -->
                     </form>
                 </div>
             </div>
