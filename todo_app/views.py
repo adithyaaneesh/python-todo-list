@@ -1,6 +1,54 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from .models import Todo
 
 # Create your views here.
-def sample():
-    return HttpResponse("HElloo")
+def add_task(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        due_date = request.POST['due_date']
+        if title and description:
+            Todo.objects.create(
+                title =title,
+                description = description,
+                created_at = timezone.now(),
+                due_date = due_date if due_date else None
+            )
+            return redirect('home')
+    return render(request,'add_task.html')
+
+def task_list(request):
+    tasks = Todo.objects.all().order_by("-created_at")
+    return render(request,'home.html',{'tasks':tasks})
+
+def complete_task(request,task_id):
+    task = get_object_or_404(Todo,id=task_id)
+    task.complete_task = True
+    task.save()
+    return redirect('home')
+
+def update_task(request,task_id):
+    task = get_object_or_404(Todo,id=task_id)
+
+    if request.method == "POST":
+        title = request.POST['title']
+        description = request.POST['description']
+        due_date = request.POST['due_date']
+
+        if title and description:
+            task.title =title
+            task.description = description
+            task.due_date = due_date if due_date else None
+            task.save()
+            return redirect('home')
+    return render(request,'update_task.html',{'task':task})
+
+def delete_task(request,task_id):
+    task = get_object_or_404(Todo,id=task_id)
+    task.delete()
+    return redirect('home')
+
+
+
+

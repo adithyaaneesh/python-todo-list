@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Add Task</h3>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter task title">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter task description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="due_date" class="form-label">Due Date</label>
+                <input type="date" id="due_date" name="due_date" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success w-100">Add Task</button>
+        </form>
+    </div>
+</body>
+</html>

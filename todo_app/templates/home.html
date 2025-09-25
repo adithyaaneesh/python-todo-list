@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>TASK LIST</h2>
+        <a href="{% url 'add_task' %}">Add New Task</a>
+    </div>
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.created_at|date:"Y-m-d" }}</td>
+                <td>{{ task.due_date|date:"Y-m-d" }}</td>
+                <td>
+                    {% if task.complete_task %}
+                    <span>Completed</span>
+                    {% else %}
+                    <span>Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not task.complete_task %}
+                    <a href="{% url 'complete_task' task.id %}">Mark Completed</a>
+                    {% else %}
+                    <span>-</span>
+                    {% endif %}
+                    <a href="{% url 'update_task' task.id %}">Update</a>
+                    <a href="{% url 'delete_task' task.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
