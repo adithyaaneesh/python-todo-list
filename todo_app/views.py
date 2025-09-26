@@ -22,7 +22,8 @@ def add_task(request):
 def task_list(request):
     tasks = Todo.objects.all().order_by("-created_at")
     today = date.today()
-    return render(request,'home.html',{'tasks':tasks, 'today':today })
+    pending_task = Todo.objects.all().filter(complete_task = False).count()
+    return render(request,'home.html',{'tasks':tasks, 'today':today,'pending_task':pending_task })
 
 def complete_task(request,task_id):
     task = get_object_or_404(Todo,id=task_id)
