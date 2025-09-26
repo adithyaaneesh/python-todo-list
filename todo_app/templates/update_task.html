@@ -30,6 +30,10 @@
                                 <input type="date" class="form-control" id="due_date" name="due_date"
                                     value="{{ task.due_date|date:'Y-m-d' }}">
                             </div>
+                            <div class="mb-3">
+                                <input type="checkbox" name="status" id="status" {% if task.complete_task %}checked{% endif %}>
+                                <label for="status">Completed</label>
+                            </div>
                             <button type="submit" class="btn btn-success">Update Task</button>
                             <a href="{% url 'home' %}" class="btn btn-secondary ms-2">Cancel</a>
                         </form>

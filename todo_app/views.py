@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from .models import Todo
@@ -20,7 +21,8 @@ def add_task(request):
 
 def task_list(request):
     tasks = Todo.objects.all().order_by("-created_at")
-    return render(request,'home.html',{'tasks':tasks})
+    today = date.today()
+    return render(request,'home.html',{'tasks':tasks, 'today':today })
 
 def complete_task(request,task_id):
     task = get_object_or_404(Todo,id=task_id)
@@ -32,14 +34,15 @@ def update_task(request,task_id):
     task = get_object_or_404(Todo,id=task_id)
 
     if request.method == "POST":
-        title = request.POST['title']
-        description = request.POST['description']
-        due_date = request.POST['due_date']
-
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        due_date = request.POST.get('due_date')
+        status = request.POST.get('status')
         if title and description:
             task.title =title
             task.description = description
             task.due_date = due_date if due_date else None
+            task.complete_task = "status" in request.POST 
             task.save()
             return redirect('home')
     return render(request,'update_task.html',{'task':task})
