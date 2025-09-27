@@ -9,6 +9,12 @@ def add_task(request):
         title = request.POST['title']
         description = request.POST['description']
         due_date = request.POST['due_date']
+        today = date.today()
+        if due_date and date.fromisoformat(due_date) < date.today():
+            return render(request, 'add_task.html', {
+                'error': 'Due date cannot be in the past',
+                'today': today
+            })
         if title and description:
             Todo.objects.create(
                 title =title,
@@ -39,6 +45,12 @@ def update_task(request,task_id):
         description = request.POST.get('description')
         due_date = request.POST.get('due_date')
         status = request.POST.get('status')
+        today = date.today()
+        if due_date and date.fromisoformat(due_date) < date.today():
+            return render(request, 'update_task.html', {
+                'error': 'Due date cannot be in the past',
+                'today': today
+            })
         if title and description:
             task.title =title
             task.description = description

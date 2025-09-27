@@ -29,6 +29,9 @@
                                 <label for="due_date" class="form-label">Due Date</label>
                                 <input type="date" class="form-control" id="due_date" name="due_date"
                                     value="{{ task.due_date|date:'Y-m-d' }}">
+                                {% if error %}
+                                    <span class="text-danger">{{ error }}</span>
+                                {% endif %}
                             </div>
                             <div class="mb-3">
                                 <input type="checkbox" name="status" id="status" {% if task.complete_task %}checked{% endif %}>
