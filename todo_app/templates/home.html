@@ -87,7 +87,12 @@
         toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
         toggleBtn.classList.remove("btn-outline-dark");
         toggleBtn.classList.add("btn-outline-light");
-    } 
+    }else {
+        body.setAttribute("data-bs-theme", "light");
+        toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        toggleBtn.classList.remove("btn-outline-light");
+        toggleBtn.classList.add("btn-outline-dark");
+    }
 
     toggleBtn.addEventListener("click", () => {
         if (body.getAttribute("data-bs-theme") === "light") {
